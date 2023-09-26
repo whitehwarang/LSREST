@@ -75,3 +75,28 @@ def main():
     # 3. 수신한 데이터 출력
     print(daily_chart)
 ```
+
+### how to use websocket
+
+```python
+import json
+import websockets
+import eBREST as eb
+
+appkey = "abcdefg..."
+appsecretkey = "ABCEDFG..."
+
+def main():
+    tr_inst = eb.IssueToken(appkey, appsecretkey)
+    token_info = eb.Sync.rq_tr(tr_inst)
+    my_token = token_info['access_token']
+
+    # 1. websocket tr 생성
+    ws_inst = eb.NWS(token=my_token, ty_key='NWS001')
+    # 2. websocket 연결
+    await eb.Async.connect_ws(ws_inst=ws_inst, callback=print)
+    #eb.Async.connect_ws(ws_inst=ws_inst, callback=print).send(None)
+    #ws_inst.disconnect() # for disconnect the websocket.
+
+
+```
