@@ -4,7 +4,6 @@ eBest 투자증권의 RESTful OpenAPI 이용 코드
 ## example code
 ### how to request tr asyncronously
 ```python
-import datetime
 import aiohttp
 import eBREST as eb
 
