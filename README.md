@@ -1,8 +1,8 @@
 # eBREST
 eBest 투자증권의 RESTful OpenAPI 이용 코드
 
-## example (asyncronous version)
-
+## example code
+### how to request tr asyncronously
 ```python
 import datetime
 import aiohttp
@@ -10,11 +10,8 @@ import eBREST as eb
 
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
-```
 
 
-### how to request tr asyncronously
-```python
 async def main():
     async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
 
