@@ -1,6 +1,6 @@
 # eBREST
 eBest 투자증권의 RESTful OpenAPI(https://openapi.ebestsec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
-비동기식(Asyncronously) 및 동기식(Syncronously) 모두 이용 가능하며, 
+비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 
 아래 예제 코드(example code)를 참고하여 사용할 수 있습니다.
 
 ## 이용 방법
@@ -26,7 +26,7 @@ API를 custum으로 사용하고 싶으신 경우, EasyAPI에 작성하셔서 �
 
 
 ## example code
-### how to request tr asyncronously
+### how to request tr asynchronously
 ```python
 import aiohttp
 import eBREST as eb
@@ -52,7 +52,7 @@ async def main():
 ```
 
 
-### how to request tr syncronously
+### how to request tr synchronously
 
 ```python
 import eBREST as eb
