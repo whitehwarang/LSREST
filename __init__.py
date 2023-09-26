@@ -5,7 +5,8 @@ from . import RealtimeInvestInfo
 from . import Stock
 from . import Upjong
 from . import ETC
-from . import Util
+from . import Async
+from . import Sync
 
 from .FutOpt import *
 from .FrgFut import *
@@ -14,6 +15,5 @@ from .RealtimeInvestInfo import *
 from .Stock import *
 from .Upjong import *
 from .ETC import *
-from .Util import *
 
 # from . import Const
