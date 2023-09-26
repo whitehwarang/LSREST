@@ -16,8 +16,8 @@ appsecretkey = "ABCEDFG..."
 
 
 ### how to request tr asyncronously
-async def main():
 
+async def main():
     async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
 
         tr_inst = eb.IssueToken(appkey, appsecretkey)
@@ -30,6 +30,7 @@ async def main():
 
 
 ### how to request tr syncronously
+
 def main():
     tr_inst = eb.IssueToken(appkey, appsecretkey)
     token_info = eb.Sync.rq_tr(tr_inst)
