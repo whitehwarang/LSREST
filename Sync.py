@@ -56,7 +56,10 @@ def rq_tr(tr_inst:BaseTR) -> dict:
         # append re-requested data to previously requested data.
         for sub_outblock_nm in _outblock_nms:
             if sub_outblock_nm == _main_outblock_nm: continue
-            body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
+            if isinstance(rp['body'][sub_outblock_nm], dict): continue
+            else:
+                body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
 
     return body
+
 
