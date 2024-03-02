@@ -71,6 +71,7 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
         # append re-requested data to the previously one.
         for sub_outblock_nm in _outblock_nms:
             if sub_outblock_nm == _main_outblock_nm: continue
+            if isinstance(rp['body'][sub_outblock_nm], dict): continue
             body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
             
     return body
