@@ -68,11 +68,10 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
         if any(sub_outblock_nm not in rp['body'] for sub_outblock_nm in _outblock_nms):
             raise AsyncNoOutBlockReceivedError
 
-        # append re-requested data to the previously one.
+        # append re-requested list-type data to previously requested one.
         for sub_outblock_nm in _outblock_nms:
-            if sub_outblock_nm == _main_outblock_nm: continue
-            if isinstance(rp['body'][sub_outblock_nm], dict): continue
-            body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
+            if isinstance(rp['body'][sub_outblock_nm], list): 
+                body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
             
     return body
 

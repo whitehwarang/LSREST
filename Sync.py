@@ -53,11 +53,9 @@ def rq_tr(tr_inst:BaseTR) -> dict:
         tr_inst.incr_cnt()
         rp : dict = _post(tr_inst)
         
-        # append re-requested data to previously requested data.
+        # append re-requested list-type data to previously requested one.
         for sub_outblock_nm in _outblock_nms:
-            if sub_outblock_nm == _main_outblock_nm: continue
-            if isinstance(rp['body'][sub_outblock_nm], dict): continue
-            else:
+            if isinstance(rp['body'][sub_outblock_nm], list):
                 body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
 
     return body
