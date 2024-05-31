@@ -1,5 +1,5 @@
-# eBREST
-eBest 투자증권의 RESTful OpenAPI(https://openapi.ebestsec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
+# LSREST
+LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
 비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 
 아래 예제 코드(example code)를 참고하여 사용할 수 있습니다.
 
@@ -29,7 +29,7 @@ API를 custum으로 사용하고 싶으신 경우, EasyAPI에 작성하셔서 �
 ### how to request tr asynchronously
 ```python
 import aiohttp
-import eBREST as eb
+import LSREST as api
 
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
@@ -37,16 +37,16 @@ appsecretkey = "ABCEDFG..."
 async def main():
     async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
         # 1. tr 생성
-        tr_inst = eb.IssueToken(appkey, appsecretkey)
+        tr_inst = api.IssueToken(appkey, appsecretkey)
         # 2. 비동기로 tr 요청
-        token_info = await eb.Async.rq_tr(session=session, tr_inst=tr_inst)
+        token_info = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
         # 3. 토큰 추출
         my_token = token_info['access_token']
 
         # 1. tr 생성
-        tr_inst = eb.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+        tr_inst = api.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
         # 2. 비동기로 tr 요청
-        daily_chart = await eb.Async.rq_tr(session=session, tr_inst=tr_inst)
+        daily_chart = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
         # 3. 수신한 데이터 출력
         print(daily_chart)
 ```
@@ -62,16 +62,16 @@ appsecretkey = "ABCEDFG..."
 
 def main():
     # 1. tr 생성
-    tr_inst = eb.IssueToken(appkey, appsecretkey)
+    tr_inst = api.IssueToken(appkey, appsecretkey)
     # 2. 동기로 tr 요청
-    token_info = eb.Sync.rq_tr(tr_inst)
+    token_info = api.Sync.rq_tr(tr_inst)
     # 3. 토큰 추출
     my_token = token_info['access_token']
 
     # 1. tr 생성
-    tr_inst = eb.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+    tr_inst = api.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
     # 2. 동기로 tr 요청
-    daily_chart = eb.Sync.rq_tr(tr_inst)
+    daily_chart = api.Sync.rq_tr(tr_inst)
     # 3. 수신한 데이터 출력
     print(daily_chart)
 ```
@@ -87,16 +87,16 @@ appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
 
 def main():
-    tr_inst = eb.IssueToken(appkey, appsecretkey)
-    token_info = eb.Sync.rq_tr(tr_inst)
+    tr_inst = api.IssueToken(appkey, appsecretkey)
+    token_info = api.Sync.rq_tr(tr_inst)
     my_token = token_info['access_token']
 
     # 1. websocket tr 생성
-    ws_inst = eb.NWS(token=my_token, ty_key='NWS001')
+    ws_inst = api.NWS(token=my_token, ty_key='NWS001')
     # 2. websocket 연결
-    await eb.Async.connect_ws(ws_inst=ws_inst, callback=print)
-    #eb.Async.connect_ws(ws_inst=ws_inst, callback=print).send(None)
-    #ws_inst.disconnect() # for disconnect the websocket.
+    await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
+    api.Async.connect_ws(ws_inst=ws_inst, callback=print).send(None)
+    ws_inst.disconnect() # for disconnect the websocket.
 
 
 ```
