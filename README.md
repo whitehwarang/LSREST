@@ -55,7 +55,7 @@ async def main():
 ### how to request tr synchronously
 
 ```python
-import eBREST as eb
+import LSREST as api
 
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
@@ -81,7 +81,7 @@ def main():
 ```python
 import json
 import websockets
-import eBREST as eb
+import LSREST as api
 
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
