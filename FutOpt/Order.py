@@ -8,12 +8,25 @@ class _OrderTR(BaseTR):
         super().__init__(*args, **kwargs)
 
 
+class FNOORDPRCPTNCODE:
+    SPECIFIC = "00"                         # 지정가 
+    SPECIFIC_IOC = '10'                     # 지정가 (IOC)
+    SPECIFIC_FOK = '20'                     # 지정가 (FOK)
+    MARKET = "03"                           # 시장가 
+    MARKET_IOC = '13'                       # 시장가 (IOC)
+    MARKET_FOK = '23'                       # 시장가 (FOK)
+    CONDITIONAL_SPECIFIC = "05"             # 조건부지정가
+    MOST_ADVENTAGEOUS_SPECIFIC = "06"       # 최유리지정가
+    MOST_ADVENTAGEOUS_SPECIFIC_IOC = "16"       # 최유리지정가(IOC)
+    MOST_ADVENTAGEOUS_SPECIFIC_FOK = "26"       # 최유리지정가(FOK)
+
+
 class CFOAT00100(_OrderTR):
     TRCode = "CFOAT00100"
     Name   = "선물옵션 정상주문"
     TRLimitPerSecond = 10
     TRCnt  = 0
-    def __init__(self, token, FnoIsuNo, BnsTpCode, FnoOrdprcPtnCode, FnoOrdPrc, OrdQty):
+    def __init__(self, token, FnoIsuNo, BnsTpCode, FnoOrdprcPtnCode:FNOORDPRCPTNCODE, FnoOrdPrc, OrdQty):
         super().__init__(token)
         self.body = {'CFOAT00100InBlock1': {'FnoIsuNo': FnoIsuNo, 'BnsTpCode': BnsTpCode, 'FnoOrdprcPtnCode': FnoOrdprcPtnCode, 'FnoOrdPrc': FnoOrdPrc, 'OrdQty': OrdQty}}
 

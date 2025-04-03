@@ -1,3 +1,6 @@
+# Update History
+- (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
+
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
 비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 

@@ -1,5 +1,6 @@
 
 from ..Base import BaseTR
+from .Const import EXCHGUBUN
 
 
 class _Frg_Insti_TR(BaseTR):
@@ -23,9 +24,9 @@ class t1716(_Frg_Insti_TR):
     Name   = "외인기관종목별동향"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, shcode, gubun, fromdt, todt, prapp, prgubun, orggubun, frggubun):
+    def __init__(self, token, shcode, gubun, fromdt, todt, prapp, prgubun, orggubun, frggubun, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1716InBlock': {'shcode': shcode, 'gubun': gubun, 'fromdt': fromdt, 'todt': todt, 'prapp': prapp, 'prgubun': prgubun, 'orggubun': orggubun, 'frggubun': frggubun}}
+        self.body = {'t1716InBlock': {'shcode': shcode, 'gubun': gubun, 'fromdt': fromdt, 'todt': todt, 'prapp': prapp, 'prgubun': prgubun, 'orggubun': orggubun, 'frggubun': frggubun, 'exchgubun': exchgubun}}
 
     
 class t1717(_Frg_Insti_TR):
@@ -33,8 +34,7 @@ class t1717(_Frg_Insti_TR):
     Name   = "외인기관종목별동향"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, shcode, gubun, fromdt, todt):
+    def __init__(self, token, shcode, gubun, fromdt, todt, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1717InBlock': {'shcode': shcode, 'gubun': gubun, 'fromdt': fromdt, 'todt': todt}}
+        self.body = {'t1717InBlock': {'shcode': shcode, 'gubun': gubun, 'fromdt': fromdt, 'todt': todt, 'exchgubun': exchgubun}}
 
-    

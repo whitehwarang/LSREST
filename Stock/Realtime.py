@@ -2,6 +2,13 @@
 from ..Base import BaseWSAcc, BaseWSSise
 
 
+"""""
+25.04.03. 공지사항
+1) 스마트 주문은 별도 제공하지 않습니다.
+2) 신규 실시간 등록시 InBlock필드의 사이즈에 맞춰 입력하셔야 합니다.  ex) US3의 ex_shcode 크기가 10인 경우 'U078020   '으로 입력
+"""
+
+
 class B7_(BaseWSSise):
     TRCode = "B7_"
     Name   = "ETF호가잔량"
@@ -309,4 +316,150 @@ class Ys3(BaseWSSise):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
+class NS3(BaseWSSise):
+    TRCode = "NS3"
+    Name   = "(NXT)체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NH1(BaseWSSise):
+    TRCode = "NH1"
+    Name   = "(NXT)호가잔량"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NS2(BaseWSSise):
+    TRCode = "NS2"
+    Name   = "(NXT)우선호가"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NYS(BaseWSSise):
+    TRCode = "NYS"
+    Name   = "(NXT)예상체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NVI(BaseWSSise):
+    TRCode = "NVI"
+    Name   = "VI 발동 해제"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NK1(BaseWSSise):
+    TRCode = "NK1"
+    Name   = "(NXT)거래원"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NPH(BaseWSSise):
+    TRCode = "NPH"
+    Name   = "(NXT)프로그램매매종목별"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NPM(BaseWSSise):
+    TRCode = "NPM"
+    Name   = "(NXT)프로그램매매전체집계"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NBT(BaseWSSise):
+    TRCode = "NBT"
+    Name   = "(NXT)시간대별투자자매매추이"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NBM(BaseWSSise):
+    TRCode = "NBM"
+    Name   = "(NXT)업종별투자자별매매현황"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class US3(BaseWSSise):
+    TRCode = "US3"
+    Name   = "(통합)체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UH1(BaseWSSise):
+    TRCode = "UH1"
+    Name   = "(통합)호가잔량"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class US2(BaseWSSise):
+    TRCode = "US2"
+    Name   = "(통합)우선호가"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UYS(BaseWSSise):
+    TRCode = "UYS"
+    Name   = "(통합)예상체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UPH(BaseWSSise):
+    TRCode = "UPH"
+    Name   = "(통합)프로그램매매종목별"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UK1(BaseWSSise):
+    TRCode = "UK1"
+    Name   = "(통합)거래원"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UBT(BaseWSSise):
+    TRCode = "UBT"
+    Name   = "(통합)시간대별투자자매매추이"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UBM(BaseWSSise):
+    TRCode = "UBM"
+    Name   = "업종별투자자별매매현황"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UPM(BaseWSSise):
+    TRCode = "UPM"
+    Name   = "(통합)프로그램매매전체집계"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class UVI(BaseWSSise):
+    TRCode = "UVI"
+    Name   = "(통합)VI발동해제"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class AFR(BaseWSSise):
+    TRCode = 'AFR'
+    Name   = 'API사용자조건검색실시간'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 

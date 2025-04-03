@@ -14,6 +14,7 @@ class ORDPRCPTNCODE:
     CONDITIONAL_SPECIFIC = "05"             # 조건부지정가
     MOST_ADVENTAGEOUS_SPECIFIC = "06"       # 최유리지정가
     MOST_PRIORITY_SPECIFIC = "07"           # 최우선지정가
+    MIDDLE = '12'                           # 중간가 (25.03.28. 17:00~)
     OVERTIME_PRICE_BEFORE_OPENING = "61"    # 장개시전시간외종가
     OUT_OF_HOURS_CLOSING_PRICE = "81"       # 시간외종가
     OUT_OF_HOURS_SINGLE_PRICE = "82"        # 시간외단일가
@@ -41,6 +42,12 @@ class BNSTPCODE:
     SELL, BUY = "1", "2"
 
 
+class MBRNO:
+    KRX = 'KRX'
+    NXT = 'NXT'
+    # 공백을 포함한 그외 입력값은 KRX로 처리
+
+
 class CSPAT00601(_OrderTR):
     TRCode = "CSPAT00601"
     Name   = "현물주문"
@@ -56,6 +63,7 @@ class CSPAT00601(_OrderTR):
                  MgntrnCode:MGNTRNCODE=MGNTRNCODE.NORMAL,
                  LoanDt:str="",
                  OrdCndiTpCode:ORDCNDITPCODE=ORDCNDITPCODE.NONE,
+                 MbrNo:MBRNO=MBRNO.KRX,
                  ):
         super().__init__(token)
         self.body = {
@@ -67,7 +75,8 @@ class CSPAT00601(_OrderTR):
                 'OrdprcPtnCode': OrdprcPtnCode, 
                 'MgntrnCode': MgntrnCode, 
                 'LoanDt': LoanDt, 
-                'OrdCndiTpCode': OrdCndiTpCode
+                'OrdCndiTpCode': OrdCndiTpCode,
+                'MbrNo': MbrNo
             }
         }
 

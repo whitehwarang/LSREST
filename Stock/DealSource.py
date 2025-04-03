@@ -1,6 +1,6 @@
 
 from ..Base import BaseTR
-
+from .Const import EXCHGUBUN
 
 class _DealSourceTR(BaseTR):
     Url     = "/stock/exchange"
@@ -13,9 +13,9 @@ class t1752(_DealSourceTR):
     Name   = "종목별상위회원사"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, shcode, traddate1, traddate2, fwgubun1, cts_idx):
+    def __init__(self, token, shcode, traddate1, traddate2, fwgubun1, cts_idx, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1752InBlock': {'shcode': shcode, 'traddate1': traddate1, 'traddate2': traddate2, 'fwgubun1': fwgubun1, 'cts_idx': cts_idx}}
+        self.body = {'t1752InBlock': {'shcode': shcode, 'traddate1': traddate1, 'traddate2': traddate2, 'fwgubun1': fwgubun1, 'cts_idx': cts_idx, 'exchgubun': exchgubun}}
 
     
 class t1764(_DealSourceTR):
@@ -33,8 +33,8 @@ class t1771(_DealSourceTR):
     Name   = "종목별회원사추이"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, shcode, tradno, gubun1, traddate1, traddate2, cts_idx, cnt):
+    def __init__(self, token, shcode, tradno, gubun1, traddate1, traddate2, cts_idx, cnt, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1771InBlock': {'shcode': shcode, 'tradno': tradno, 'gubun1': gubun1, 'traddate1': traddate1, 'traddate2': traddate2, 'cts_idx': cts_idx, 'cnt': cnt}}
+        self.body = {'t1771InBlock': {'shcode': shcode, 'tradno': tradno, 'gubun1': gubun1, 'traddate1': traddate1, 'traddate2': traddate2, 'cts_idx': cts_idx, 'cnt': cnt, 'exchgubun': exchgubun}}
 
     

@@ -24,6 +24,7 @@ async def _post(session:ClientSession, tr_inst:BaseTR, test_print:bool=False) ->
     return {'header': header, 'body': body}
 
 
+# Error Definition 
 class AsyncNoOutBlockReceivedError(Exception): pass
 
 
@@ -72,7 +73,7 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
         for sub_outblock_nm in _outblock_nms:
             if isinstance(rp['body'][sub_outblock_nm], list): 
                 body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
-            
+        
     return body
 
 
@@ -81,9 +82,9 @@ async def connect_ws(ws_inst:BaseWS, callback=print) -> None:
 
     async with websockets.connect(ws_inst.Url) as ws:
         # 웹 소켓 서버로 데이터를 전송한다.
-        s : str = json.dumps(ws_inst.into_dict())
-        await ws.send(s)
-        ws_inst.connect()
+        sending_string : str = json.dumps(ws_inst.into_dict())
+        await ws.send(sending_string)
+        ws_inst.connect()  # ws_inst.connection = True로 셋팅
 
         # 웹 소켓 서버로부터 메시지가 오면 처리한다.
         while ws_inst.connection:
@@ -91,6 +92,7 @@ async def connect_ws(ws_inst:BaseWS, callback=print) -> None:
             data : dict = json.loads(rcvd_string)
             callback(data)
         else:   # 웹 소켓 서버 접속을 끊었을 때(disconnect())의 처리.
+            # ws_inst.connection = False로 셋팅 (False로 셋팅되어야만 실행되는 코드 영역이지만, 보험용으로 작성)
             ws_inst.disconnect()
             ws_inst.switch_unreg()
             s : str = json.dumps(ws_inst.into_dict())

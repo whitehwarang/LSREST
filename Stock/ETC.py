@@ -1,5 +1,6 @@
 
 from ..Base import BaseTR
+from .Const import EXCHGUBUN
 
 
 class _ETCTR(BaseTR):
@@ -43,9 +44,9 @@ class t1638(_ETCTR):
     Name   = "종목별잔량/사전공시"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, gubun1, shcode, gubun2):
+    def __init__(self, token, gubun1, shcode, gubun2, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1638InBlock': {'gubun1': gubun1, 'shcode': shcode, 'gubun2': gubun2}}
+        self.body = {'t1638InBlock': {'gubun1': gubun1, 'shcode': shcode, 'gubun2': gubun2, 'exchgubun': exchgubun}}
 
     
 class t1921(_ETCTR):

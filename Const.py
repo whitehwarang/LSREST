@@ -1,3 +1,6 @@
+"""
+LS - OPEN API 고정값을 저장하는 파일
+"""
 
 # 24.06.01. EBEST 투자증권 --(명칭변경)--> LS투자증권
 # BASE_URL_POST = "https://openapi.ebestsec.co.kr:8080"

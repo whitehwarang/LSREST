@@ -37,4 +37,17 @@ class t1826(_ItemSearchTR):
         super().__init__(token)
         self.body = {'t1826InBlock': {'search_gb': search_gb}}
 
-    
+
+class t1856(_ItemSearchTR):
+    TRCode = 't1856'
+    Name   = '파일저장종목검색'
+    TRLimitPerSecond = 1
+    TRCnt  = 1
+    def __init__(self, token, sFileData):
+        super().__init__(token)
+        self.body = {'t1856InBlock': {'sFileData':sFileData}}
+        """Element	한글명	type	Required	Length	Description
+            t1856InBlock	t1856InBlock	Object	Y	-	
+            -sFileData	sFileData	String	Y	26779	대상파일 binaryType 오픈 > base64 incoding > utf8 incoding
+        """
+

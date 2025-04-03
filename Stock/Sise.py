@@ -1,4 +1,5 @@
 from ..Base import BaseTR
+from .Const import EXCHGUBUN
 
 
 class _SiseTR(BaseTR):
@@ -22,9 +23,12 @@ class t1102(_SiseTR):
     Name   = "주식현재가(시세)조회"
     TRLimitPerSecond = 3
     TRCnt  = 0
-    def __init__(self, token, code6):
+    def __init__(self, 
+                 token: str, 
+                 code6: str, 
+                 exchgubun: EXCHGUBUN):
         super().__init__(token)
-        self.body = {'t1102InBlock': {'shcode': code6}}
+        self.body = {'t1102InBlock': {'shcode': code6, 'exchgubun': exchgubun}}
 
     
 class t1104(_SiseTR):
@@ -42,13 +46,14 @@ class t1104(_SiseTR):
                  token: str, 
                  code6: str, 
                  nrec: str, 
+                 exchgubun: EXCHGUBUN, 
                  occurs_indx: str,
                  gubn: GUBN,
                  dat1: DAT1,
                  dat2: DAT2):
         super().__init__(token)
         self.body = {
-            "t1104InBlock": {"code": code6, "nrec": nrec},
+            "t1104InBlock": {"code": code6, "nrec": nrec, 'exchgubun': exchgubun},
             "t1104InBlock1":{"indx": occurs_indx, "gubn": gubn, "dat1": dat1, "dat2": dat2}
         }
     
@@ -58,9 +63,9 @@ class t1105(_SiseTR):
     Name   = "주식피봇/디마크조회"
     TRLimitPerSecond = 3
     TRCnt  = 0
-    def __init__(self, token, shcode):
+    def __init__(self, token: str, shcode: str, exchgubun: EXCHGUBUN):
         super().__init__(token)
-        self.body = {'t1105InBlock': {'shcode': shcode}}
+        self.body = {'t1105InBlock': {'shcode': shcode, 'exchgubun': exchgubun}}
 
     
 class t1109(_SiseTR):
@@ -113,10 +118,11 @@ class t1302(_SiseTR):
                  code6:str,
                  gubun:str,     # 0:30초 1:1분 2:3분 3:5분 4:10분 5:30분 6:60분
                  time:str=" ",  # 처음 조회시는 Space / 연속 조회시에 이전 조회한 OutBlock의 cts_time 값으로 설정
-                 cnt:int=1):    # 1이상 900 이하
+                 cnt:int=1, 
+                 exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):    # 1이상 900 이하
         super().__init__(token)
         self.body = {
-            "t1302InBlock": {"shcode": code6, "gubun": gubun, "time": time, "cnt": cnt}
+            "t1302InBlock": {"shcode": code6, "gubun": gubun, "time": time, "cnt": cnt, 'exchgubun': exchgubun}
         }
 
     
@@ -133,11 +139,12 @@ class t1305(_SiseTR):
                  dwmcode:DWMCODE,
                  date:str,
                  idx:int=0,
-                 cnt:int=1):
+                 cnt:int=1,
+                 exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
         self.body = {
             "t1305InBlock": {
-                "shcode": code6, "dwmcode": dwmcode, "date": date, "idx": idx, "cnt": cnt
+                "shcode": code6, "dwmcode": dwmcode, "date": date, "idx": idx, "cnt": cnt, 'exchgubun': exchgubun
             }
         }
 
@@ -152,14 +159,14 @@ class t1308(_SiseTR):
                  code6: str,
                  starttime: str, 
                  endtime: str,
-                 bun_term:str):
+                 bun_term:str,
+                 exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
         self.body = {
             "t1308InBlock": {
-                "shcode": code6, "starttime": starttime, "endtime": endtime, "bun_term": bun_term
+                "shcode": code6, "starttime": starttime, "endtime": endtime, "bun_term": bun_term, 'exchgubun': exchgubun
             }
         }
-
 
 
 class t1310(_SiseTR):
@@ -175,9 +182,14 @@ class t1310(_SiseTR):
                  timegb:str, 
                  shcode:str,
                  endtime:str,
-                 cts_time:str):
+                 cts_time:str,
+                 exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1310InBlock': {'daygb': daygb, 'timegb': timegb, 'shcode': shcode, 'endtime': endtime, 'cts_time': cts_time}}
+        self.body = {
+            't1310InBlock': {
+                'daygb': daygb, 'timegb': timegb, 'shcode': shcode, 'endtime': endtime, 'cts_time': cts_time, 'exchgubun': exchgubun
+            }
+        }
 
     
 class t1404(_SiseTR):
@@ -217,9 +229,13 @@ class t1422(_SiseTR):
     Name   = "상/하한"
     TRLimitPerSecond = 1
     TRCnt  = 0
-    def __init__(self, token, qrygb, gubun, jnilgubun, sign, jc_num, sprice, eprice, volume, idx):
+    def __init__(self, token, qrygb, gubun, jnilgubun, sign, jc_num, sprice, eprice, volume, idx, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1422InBlock': {'qrygb': qrygb, 'gubun': gubun, 'jnilgubun': jnilgubun, 'sign': sign, 'jc_num': jc_num, 'sprice': sprice, 'eprice': eprice, 'volume': volume, 'idx': idx}}
+        self.body = {
+            't1422InBlock': {
+                'qrygb': qrygb, 'gubun': gubun, 'jnilgubun': jnilgubun, 'sign': sign, 'jc_num': jc_num, 'sprice': sprice, 'eprice': eprice, 'volume': volume, 'idx': idx, 'exchgubun': exchgubun,
+            }
+        }
 
     
 class t1427(_SiseTR):
@@ -277,9 +293,9 @@ class t1486(_SiseTR):
     Name   = "시간별예상체결가"
     TRLimitPerSecond = 2
     TRCnt  = 0
-    def __init__(self, token, shcode, cts_time, cnt):
+    def __init__(self, token, shcode, cts_time, cnt, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
         super().__init__(token)
-        self.body = {'t1486InBlock': {'shcode': shcode, 'cts_time': cts_time, 'cnt': cnt}}
+        self.body = {'t1486InBlock': {'shcode': shcode, 'cts_time': cts_time, 'cnt': cnt, 'exchgubun': exchgubun}}
 
     
 class t1488(_SiseTR):
@@ -303,7 +319,7 @@ class t8407(_SiseTR):
         super().__init__(token)
         self.body = {'t8407InBlock': {'nrec': nrec, 'shcode': shcode}}
 
-    
+
 class t9945(_SiseTR):
     TRCode = "t9945"
     Name   = "주식마스터조회API용"
@@ -313,4 +329,38 @@ class t9945(_SiseTR):
         super().__init__(token)
         self.body = {'t9945InBlock': {'gubun': gubun}}
 
-    
+
+class t8450(_SiseTR):
+    TRCode = 't8450'
+    Name   = '(통합)주식현재가호가조회2 API용'
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token: str, shcode: str, exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
+        super().__init__(token)
+        self.body = {'t8450InBlock': {'shcode':shcode, 'exchgubun':exchgubun}}
+
+
+class t8454(_SiseTR):
+    TRCode = 't8454'
+    Name   = '(통합)주식시간대별체결2 API용'
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, 
+                 token: str, 
+                 shcode: str, 
+                 cvolume: int,
+                 starttime: str,
+                 endtime: str,
+                 cts_time: str,
+                 exchgubun:EXCHGUBUN=EXCHGUBUN.KRX):
+        super().__init__(token)
+        self.body = {
+            't8454InBlock': {
+                'shcode':shcode, 
+                'cvolume': cvolume,
+                'starttime': starttime,
+                'endtime': endtime,
+                'cts_time': cts_time,
+                'exchgubun':exchgubun,
+            }
+        }
