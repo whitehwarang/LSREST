@@ -42,7 +42,7 @@ class t1856(_ItemSearchTR):
     TRCode = 't1856'
     Name   = '파일저장종목검색'
     TRLimitPerSecond = 1
-    TRCnt  = 1
+    TRCnt  = 0
     def __init__(self, token, sFileData):
         super().__init__(token)
         self.body = {'t1856InBlock': {'sFileData':sFileData}}
