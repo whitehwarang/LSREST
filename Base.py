@@ -67,7 +67,7 @@ class BaseTR(TimeLimit):
     TRLimitPerSecond = 0
     # 25.04.03. 
     # TR : TR 코드별로 요청횟수를 카운트하므로, 
-    # BaseTR 상속 클래스 생성 시 공유변수로 선언( TRCnt = 0 기재 O )
+    # BaseTR 상속 클래스 생성 시 공유변수로 선언 O ( TRCnt = 0 기재 O )
     TRCnt = 0 
     PrevTime = time.time()
 
@@ -92,7 +92,7 @@ class BaseWS(TimeLimit):
     TRType: TR_TYPE = ""
     # 25.04.03. 공지사항(2025-03-17)에 따라 
     # WebSocket : TR 코드 구분 없이 요청횟수를 합산하므로, 
-    # BaseWS 상속 클래스 생성 시 공유변수로 선언( TRLimitPerSecond = 0, TRCnt = 0 기재 X )
+    # BaseWS 상속 클래스 생성 시 공유변수로 선언 X ( TRLimitPerSecond = 0, TRCnt = 0 기재 X )
     TRLimitPerSecond = 100
     TRCnt  = 0
     PrevTime = time.time()
