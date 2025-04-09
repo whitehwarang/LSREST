@@ -1,8 +1,8 @@
 import os
 import datetime
 import json
-import API
-from API import Util
+from .. import OAuth
+from .. import Async, Sync
 
 RECENT_ACCESS_TOKEN_FILE = "_recent_access_token.json"
 
@@ -38,8 +38,8 @@ def issue_token(appkey, appsecretkey):
         recent_token_info.get("timestamp") is None      or \
         recent_token_info.get("expires_in") is None     or \
         (now > recent_token_info.get("timestamp") + recent_token_info.get('expires_in')):
-        tr_auth = API.OAuth.IssueToken(appkey, appsecretkey)
-        recent_token_info = Util.rq_tr(tr_auth)
+        tr_auth = OAuth.IssueToken(appkey, appsecretkey)
+        recent_token_info = Sync.rq_tr(tr_auth)
         recent_token_info['timestamp'] = datetime.datetime.today().timestamp()
         # 저장
         _write_recent_token_info(dict_like_obj=recent_token_info, filepath=RECENT_ACCESS_TOKEN_FILE)
@@ -61,8 +61,8 @@ async def async_issue_token(session, appkey, appsecretkey):
         recent_token_info.get("timestamp") is None      or \
         recent_token_info.get("expires_in") is None     or \
         (now > recent_token_info.get("timestamp") + recent_token_info.get('expires_in')):
-        tr_auth = API.OAuth.IssueToken(appkey, appsecretkey)
-        recent_token_info = await Util.async_rq_tr(session, tr_auth)
+        tr_auth = OAuth.IssueToken(appkey, appsecretkey)
+        recent_token_info = await Async.async_rq_tr(session, tr_auth)
         recent_token_info['timestamp'] = datetime.datetime.today().timestamp()
         # 저장
         _write_recent_token_info(dict_like_obj=recent_token_info, filepath=RECENT_ACCESS_TOKEN_FILE)
