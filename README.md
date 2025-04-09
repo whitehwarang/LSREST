@@ -1,10 +1,22 @@
 # Update History
 - (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
+- (25.04.09) 주석(comment) 수정 및 dependancy 정의istory
+- (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
+- (25.04.09) 주석(comment) 수정 및 dependancy 명시
 
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
 비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 
 아래 예제 코드(example code)를 참고하여 사용할 수 있습니다.
+
+## Requirement 참고
+- **Python Version:** Python 3.9에서 테스트하였습니다.
+- **Dependencies:** 이 프로젝트를 실행하기 위해서는 다음 Python 패키지들이 필요하며, 파이썬 환경에서 아래 명령어로 설치 가능합니다.
+ - requests
+ - aiohttp
+ - websockets  
+```bash
+  pip install requests aiohttp websockets
 
 ## 이용 방법
 일반적인 순서는 다음과 같습니다.
