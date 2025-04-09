@@ -29,7 +29,7 @@ class TOKEN_TYPE_HINT:
     REFRESH_TOKEN = "refresh_token"
 
 
-class revoke(_TokenManagerTR):
+class RevokeToken(_TokenManagerTR):
     TRCode = "revoke"
     Url    = "/oauth2/revoke"
     Name   = "접근토큰 폐기"
