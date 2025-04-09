@@ -17,6 +17,7 @@ LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro
  - websockets  
 ```bash
   pip install requests aiohttp websockets
+```
 
 ## 이용 방법
 일반적인 순서는 다음과 같습니다.
