@@ -1,4 +1,4 @@
-from API import Stock, Util
+from .. import Stock, Async, Sync
 
 
 async def timely_stock_chegyuel(session, 
@@ -14,7 +14,7 @@ async def timely_stock_chegyuel(session,
                           endtime=endtime,
                           cts_time="",
                           )
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def daily_chart(session, 
@@ -32,7 +32,7 @@ async def daily_chart(session,
                           edate=edate,
                           sujung=sujung
                           )
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def minutely_chart(session, 
@@ -53,7 +53,7 @@ async def minutely_chart(session,
                           edate=edate,
                           etime=etime,
                           )
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def market_buy_order(session, 
@@ -69,7 +69,7 @@ async def market_buy_order(session,
                                MgntrnCode=Stock.Order.MGNTRNCODE.NORMAL,
                                OrdCndiTpCode=Stock.Order.ORDCNDITPCODE.NONE,
                                )
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def specific_buy_order(session,
@@ -86,7 +86,7 @@ async def specific_buy_order(session,
                                MgntrnCode=Stock.Order.MGNTRNCODE.NORMAL,
                                OrdCndiTpCode=Stock.Order.ORDCNDITPCODE.NONE,
                                )
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def change_order(session,
@@ -102,7 +102,7 @@ async def change_order(session,
                                OrdQty=OrdQty,
                                OrdPrc=OrdPrc,
                                OrdprcPtnCode=OrdprcPtnCode)
-    return await Util.async_rq_tr(session, tr_inst)
+    return await Async.async_rq_tr(session, tr_inst)
 
 
 async def cancel_order(session,
@@ -114,5 +114,5 @@ async def cancel_order(session,
                                OrgOrdNo=OrgOrdNo,
                                IsuNo=IsuNo,
                                OrdQty=OrdQty)
-    return await Util.async_rq_tr(session,tr_inst)
+    return await Async.async_rq_tr(session,tr_inst)
 
