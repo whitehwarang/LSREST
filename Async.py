@@ -76,22 +76,33 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
 
 async def connect_ws(ws_inst:BaseWS, callback=print) -> Awaitable[None]:
     """ 웹 소켓에 접속하여 실시간 정보 수신 및 처리 """
+    try:
+        async with websockets.connect(ws_inst.Url) as ws:
+            # 웹 소켓 서버로 데이터를 전송한다.
+            sending_string : str = json.dumps(ws_inst.into_dict())
+            await ws.send(sending_string)
+            ws_inst.connect()  # ws_inst.connection = True로 셋팅
 
-    async with websockets.connect(ws_inst.Url) as ws:
-        # 웹 소켓 서버로 데이터를 전송한다.
-        sending_string : str = json.dumps(ws_inst.into_dict())
-        await ws.send(sending_string)
-        ws_inst.connect()  # ws_inst.connection = True로 셋팅
+            # 웹 소켓 서버로부터 메시지가 오면 처리한다.
+            while ws_inst.connection:
+                rcvd_string : str = await ws.recv()
+                data : dict = json.loads(rcvd_string)
+                callback(data)
+            else:   # 웹 소켓 서버 접속을 끊었을 때(disconnect())의 처리.
+                # ws_inst.connection = False로 셋팅 (False로 셋팅되어야만 실행되는 코드 영역이지만, 보험용으로 작성)
+                ws_inst.disconnect()
+                ws_inst.switch_unreg()
+                s : str = json.dumps(ws_inst.into_dict())
+                await ws.send(s)
 
-        # 웹 소켓 서버로부터 메시지가 오면 처리한다.
-        while ws_inst.connection:
-            rcvd_string : str = await ws.recv()
-            data : dict = json.loads(rcvd_string)
-            callback(data)
-        else:   # 웹 소켓 서버 접속을 끊었을 때(disconnect())의 처리.
-            # ws_inst.connection = False로 셋팅 (False로 셋팅되어야만 실행되는 코드 영역이지만, 보험용으로 작성)
-            ws_inst.disconnect()
-            ws_inst.switch_unreg()
-            s : str = json.dumps(ws_inst.into_dict())
-            await ws.send(s)
+    except websockets.exceptions.ConnectionClosedError as e:
+        print(f"WebSocket 연결이 종료되었습니다: {e}")
+        print(ws_inst)
+    except Exception as e:
+        print(f"WebSocket 연결 - 오류 발생: {e}")
+        print(ws_inst)
+    finally:
+        ws_inst.disconnect()
+        ws_inst.switch_unreg()
+
 
