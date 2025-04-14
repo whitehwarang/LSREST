@@ -11,6 +11,8 @@ async def _post(session:ClientSession, tr_inst:BaseTR, test_print:bool=False) ->
     if test_print:
         print(tr_inst.header)
         print(tr_inst.body)
+    await tr_inst.async_keep_limit()
+    await tr_inst.async_incr_cnt()
     async with session.post(url=tr_inst.Url,
                             headers=getattr(tr_inst, 'header', None),
                             params=getattr(tr_inst, 'params', None),
@@ -30,8 +32,6 @@ class AsyncNoOutBlockReceivedError(Exception): pass
 
 async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
     """ 비동기로 tr을 request(요청)한다."""
-    await tr_inst.async_keep_limit()
-    await tr_inst.async_incr_cnt()
     rp : dict = await _post(session, tr_inst)
     body : dict = rp['body']
 
@@ -45,7 +45,7 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
 
         # block name setting
         _inblock_nm: str = f"{tr_inst.TRCode}InBlock"
-        _outblock_nms: tuple = tuple(key for key in body.keys() if "OutBlock" in key)
+        _outblock_nms: tuple = tuple(key for key in rp['body'].keys() if "OutBlock" in key)
         if not _outblock_nms: break  # OutBlock 없으면 연속조회 루틴 탈출
         _main_outblock_nm :str = min(_outblock_nms)
 
@@ -54,15 +54,11 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
         tr_inst.body[_inblock_nm].update(_cts_dict)
 
         # re-request
-        await tr_inst.async_keep_limit()
-        await tr_inst.async_incr_cnt()
         rp : dict = await _post(session, tr_inst)
         
         # check whether all OutBlocks were received. if not, re-request.
         if any(sub_outblock_nm not in rp['body'] for sub_outblock_nm in _outblock_nms):
             #print('Re-Requested!!!')
-            await tr_inst.async_keep_limit()
-            await tr_inst.async_incr_cnt()
             rp : dict = await _post(session, tr_inst)
         
         # if all OutBlocks were not received two times consecutively, raise error.
