@@ -2,6 +2,7 @@
 - (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
 - (25.04.09) 주석(comment) 수정 및 dependancy 명시
 - (25.04.14) Sync.py & Async.py에서 연속조회 시 오류 해결 / 경로 충돌 문제 해결 / Util.py 파일 추가(Access Token Manager 추가) / README.md의 예제코드 수정
+- (25.04.15) README.md 예제 변경
 
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
@@ -31,38 +32,8 @@ cts_로 시작하지 않는 attribute로 연속조회가 구현된 경우, 별�
 
 
 ## example code
-### how to request tr asynchronously
-```python
-import aiohttp
-import LSREST as api
 
-appkey = "abcdefg..."
-appsecretkey = "ABCEDFG..."
-
-async def main():
-    async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
-        # 비동기식으로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
-        async with api.Util.AccessTokenManager(
-            appkey=appkey, 
-            appsecretkey=appsecretkey, 
-            session=session, 
-            if_save=False
-            ) as my_token:
-            # 1. tr 생성
-            tr_inst = api.Stock.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
-            # 2. 비동기로 tr 요청
-            daily_chart = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
-            # 3. 수신한 데이터 출력
-            print(daily_chart)
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-
-```
-
-
-### how to request tr synchronously
+### (예제) tr 요청 - 동기식(sync)
 
 ```python
 import LSREST as api
@@ -72,50 +43,56 @@ appsecretkey = "ABCEDFG..."
 
 def main():
     # 동기식으로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
-    with api.Util.AccessTokenManager(
-        appkey=appkey, 
-        appsecretkey=appsecretkey, 
-        if_save=False
-        ) as my_token:
+    with api.Util.AccessTokenManager(appkey, appsecretkey) as token:
         # 1. tr 생성
-        tr_inst = api.Stock.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+        tr_inst = api.Stock.t8410(token=token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
         # 2. 동기로 tr 요청
         daily_chart = api.Sync.rq_tr(tr_inst)
         # 3. 수신한 데이터 출력
         print(daily_chart)
 ```
 
-### how to use websocket
-
+### (예제) tr 요청 - 비동기식(async)
 ```python
-import json
-import websockets
 import LSREST as api
 
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
 
 async def main():
-    tr_inst = api.IssueToken(appkey, appsecretkey)
-    token_info = api.Sync.rq_tr(tr_inst)
-    my_token = token_info['access_token']
-
-    # 1. websocket tr 생성
-    ws_inst = api.ETC.NWS(token=my_token, ty_key='NWS001')
-    # 2. websocket 연결
-    try:
-        # 응답은 callback 함수 (예:print)를 통해 처리
-        await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
-    except websockets.exceptions.ConnectionClosedError as e:
-        print(f"WebSocket 연결이 종료되었습니다: {e}")
-    except Exception as e:
-        print(f"WebSocket 연결 중 오류 발생: {e}")
-    finally:
-        if hasattr(ws_inst, 'disconnect'):
-            ws_inst.disconnect() # 여기서 연결 해제
-            # ws_inst는 다른 비동기 루틴에서 전달받아 해제하는 것도 가능
+    # 비동기식으로 세션 연결 및 토큰 요청 -> with절 종료 시 토큰 자동 폐기
+    async with api.Util.AsyncSessionAccessTokenManager(appkey, appsecretkey) as (session, token):
+        # 1. tr 생성
+        tr_inst = api.Stock.t8410(token=token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+        # 2. 비동기로 tr 요청 (session이 함께 전달되어야 함)
+        daily_chart = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
+        # 3. 수신한 데이터 출력
+        print(daily_chart)
 
 if __name__ == "__main__":
     asyncio.run(main())
 
+```
+
+### (예제) 웹소켓(websocket) 사용
+
+```python
+import json
+import websockets
+import asyncio
+import LSREST as api
+
+appkey = "abcdefg..."
+appsecretkey = "ABCEDFG..."
+
+async def main():
+    async with api.Util.AsyncSessionAccessTokenManager(appkey, appsecretkey) as (session, token):
+        # task로 실행
+        ws_inst = api.ETC.NWS(token=token, ty_key='NWS001')
+        asyncio.create_task(api.Async.connect_ws(ws_inst=ws_inst, callback=print))
+        await asyncio.sleep(600)        
+        ws_inst.disconnect() # 600초(10분) 대기 후 연결 해제
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
