@@ -103,7 +103,6 @@ async def main():
     # 1. websocket tr 생성
     ws_inst = api.ETC.NWS(token=my_token, ty_key='NWS001')
     # 2. websocket 연결
-    await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
     try:
         # 응답은 callback 함수 (예:print)를 통해 처리
         await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
