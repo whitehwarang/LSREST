@@ -50,7 +50,7 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
         _main_outblock_nm :str = min(_outblock_nms)
 
         # body setting
-        _cts_dict : dict = {k: v for k, v in body.get(_main_outblock_nm).items() if k.startswith('cts_')}
+        _cts_dict : dict = {k: v for k, v in rp['body'].get(_main_outblock_nm).items() if k.startswith('cts_')}
         tr_inst.body[_inblock_nm].update(_cts_dict)
 
         # re-request
