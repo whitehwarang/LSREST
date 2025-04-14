@@ -41,7 +41,7 @@ appsecretkey = "ABCEDFG..."
 
 async def main():
     async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
-        # 비동기로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
+        # 비동기식으로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
         async with api.Util.AccessTokenManager(
             appkey=appkey, 
             appsecretkey=appsecretkey, 
@@ -71,6 +71,7 @@ appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
 
 def main():
+    # 동기식으로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
     with api.Util.AccessTokenManager(
         appkey=appkey, 
         appsecretkey=appsecretkey, 
