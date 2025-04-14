@@ -1,23 +1,20 @@
 # Update History
-- (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
-- (25.04.09) 주석(comment) 수정 및 dependancy 정의istory
-- (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
+- (25.04.03) 
+ - 추가된 TR 반영(NXT 등)
+ - 초당 실시간(Realtime;WebSocket) 등록제한 설정
+ - 일부 코드 정리
 - (25.04.09) 주석(comment) 수정 및 dependancy 명시
+- (25.04.14) 
+ - Sync.py & Async.py에서 연속조회 시 오류 해결
+ - 경로 충돌 문제 해결
+ - Util.py 파일 추가(Access Token Manager 추가)
+ - README.md의 예제코드 수정
+
 
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
 비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 
 아래 예제 코드(example code)를 참고하여 사용할 수 있습니다.
-
-## Requirement 참고
-- **Python Version:** Python 3.9에서 테스트하였습니다.
-- **Dependencies:** 이 프로젝트를 실행하기 위해서는 다음 Python 패키지들이 필요하며, 파이썬 환경에서 아래 명령어로 설치 가능합니다.
- - requests
- - aiohttp
- - websockets  
-```bash
-  pip install requests aiohttp websockets
-```
 
 ## 이용 방법
 일반적인 순서는 다음과 같습니다.
@@ -52,19 +49,24 @@ appsecretkey = "ABCEDFG..."
 
 async def main():
     async with aiohttp.ClientSession(base_url=BASE_URL_POST) as session:
-        # 1. tr 생성
-        tr_inst = api.IssueToken(appkey, appsecretkey)
-        # 2. 비동기로 tr 요청
-        token_info = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
-        # 3. 토큰 추출
-        my_token = token_info['access_token']
+        # 비동기로 토큰 요청 및 with절 종료 시 토큰 자동 폐기
+        async with api.Util.AccessTokenManager(
+            appkey=appkey, 
+            appsecretkey=appsecretkey, 
+            session=session, 
+            if_save=False
+            ) as my_token:
+            # 1. tr 생성
+            tr_inst = api.Stock.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+            # 2. 비동기로 tr 요청
+            daily_chart = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
+            # 3. 수신한 데이터 출력
+            print(daily_chart)
 
-        # 1. tr 생성
-        tr_inst = api.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
-        # 2. 비동기로 tr 요청
-        daily_chart = await api.Async.rq_tr(session=session, tr_inst=tr_inst)
-        # 3. 수신한 데이터 출력
-        print(daily_chart)
+if __name__ == "__main__":
+    asyncio.run(main())
+
+
 ```
 
 
@@ -77,19 +79,17 @@ appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
 
 def main():
-    # 1. tr 생성
-    tr_inst = api.IssueToken(appkey, appsecretkey)
-    # 2. 동기로 tr 요청
-    token_info = api.Sync.rq_tr(tr_inst)
-    # 3. 토큰 추출
-    my_token = token_info['access_token']
-
-    # 1. tr 생성
-    tr_inst = api.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
-    # 2. 동기로 tr 요청
-    daily_chart = api.Sync.rq_tr(tr_inst)
-    # 3. 수신한 데이터 출력
-    print(daily_chart)
+    with api.Util.AccessTokenManager(
+        appkey=appkey, 
+        appsecretkey=appsecretkey, 
+        if_save=False
+        ) as my_token:
+        # 1. tr 생성
+        tr_inst = api.Stock.t8410(token=my_token, shcode='005930', qrycnt=1000, sdate='20200101', edate='20230926')
+        # 2. 동기로 tr 요청
+        daily_chart = api.Sync.rq_tr(tr_inst)
+        # 3. 수신한 데이터 출력
+        print(daily_chart)
 ```
 
 ### how to use websocket
@@ -102,17 +102,28 @@ import LSREST as api
 appkey = "abcdefg..."
 appsecretkey = "ABCEDFG..."
 
-def main():
+async def main():
     tr_inst = api.IssueToken(appkey, appsecretkey)
     token_info = api.Sync.rq_tr(tr_inst)
     my_token = token_info['access_token']
 
     # 1. websocket tr 생성
-    ws_inst = api.NWS(token=my_token, ty_key='NWS001')
+    ws_inst = api.ETC.NWS(token=my_token, ty_key='NWS001')
     # 2. websocket 연결
     await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
-    api.Async.connect_ws(ws_inst=ws_inst, callback=print).send(None)
-    ws_inst.disconnect() # for disconnect the websocket.
+    try:
+        # 응답은 callback 함수 (예:print)를 통해 처리
+        await api.Async.connect_ws(ws_inst=ws_inst, callback=print)
+    except websockets.exceptions.ConnectionClosedError as e:
+        print(f"WebSocket 연결이 종료되었습니다: {e}")
+    except Exception as e:
+        print(f"WebSocket 연결 중 오류 발생: {e}")
+    finally:
+        if hasattr(ws_inst, 'disconnect'):
+            ws_inst.disconnect() # 여기서 연결 해제
+            # ws_inst는 다른 비동기 루틴에서 전달받아 해제하는 것도 가능
 
+if __name__ == "__main__":
+    asyncio.run(main())
 
 ```
