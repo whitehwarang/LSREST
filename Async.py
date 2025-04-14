@@ -1,3 +1,4 @@
+from typing import Awaitable
 import json
 
 from aiohttp import ClientSession
@@ -73,7 +74,7 @@ async def rq_tr(session:ClientSession, tr_inst:BaseTR) -> dict:
     return body
 
 
-async def connect_ws(ws_inst:BaseWS, callback=print) -> None:
+async def connect_ws(ws_inst:BaseWS, callback=print) -> Awaitable[None]:
     """ 웹 소켓에 접속하여 실시간 정보 수신 및 처리 """
 
     async with websockets.connect(ws_inst.Url) as ws:
@@ -93,3 +94,4 @@ async def connect_ws(ws_inst:BaseWS, callback=print) -> None:
             ws_inst.switch_unreg()
             s : str = json.dumps(ws_inst.into_dict())
             await ws.send(s)
+
