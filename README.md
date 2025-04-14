@@ -1,15 +1,7 @@
 # Update History
-- (25.04.03) 
- - 추가된 TR 반영(NXT 등)
- - 초당 실시간(Realtime;WebSocket) 등록제한 설정
- - 일부 코드 정리
+- (25.04.03) 추가된 TR 반영(NXT 등), 초당 실시간(Realtime;WebSocket) 등록제한 설정, 일부 코드 정리
 - (25.04.09) 주석(comment) 수정 및 dependancy 명시
-- (25.04.14) 
- - Sync.py & Async.py에서 연속조회 시 오류 해결
- - 경로 충돌 문제 해결
- - Util.py 파일 추가(Access Token Manager 추가)
- - README.md의 예제코드 수정
-
+- (25.04.14) Sync.py & Async.py에서 연속조회 시 오류 해결 / 경로 충돌 문제 해결 / Util.py 파일 추가(Access Token Manager 추가) / README.md의 예제코드 수정
 
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
