@@ -7,11 +7,15 @@
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
 비동기식(Asynchronously) 및 동기식(Synchronously) 모두 이용 가능하며, 
 아래 예제 코드(example code)를 참고하여 사용할 수 있습니다.
-
+1. Base.py : TR 및 websocket의 기본 뼈대 클래스(BaseTR, BaseWS)가 선언되어 있습니다.
+2. 디렉토리(ETC, FrgFut, FutOpt, OAuth 등) : 개별 TR 및 Websocket가 클래스로 선언되어 있습니다.
+3. Util.py : access_token을 요청하고 자동폐기하는 ContextManagerClass가 선언되어 있습니다.
+4. Sync.py, Async.py : 동기식/비동기식으로 tr 또는 websocket연결을 요청하는 함수가 작성되어 있습니다.
+ 
 ## 이용 방법
 일반적인 순서는 다음과 같습니다.
-1. 요청하고자 하는 tr instance를 생성한다.
-2. tr을 동기식/비동기식으로 요청한다.
+1. 요청하고자 하는 tr(또는 ws(webscket)) instance를 생성한다.
+2. tr(또는 ws)을 동기식/비동기식으로 요청한다.
 3. 데이터를 수신받아 처리한다.
 
 ## 동기/비동기
@@ -24,10 +28,6 @@ LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro
 ## 연속조회 관련사항
 'cts_'로 시작하는 attribute가 있는 tr만 연속조회가 가능하게 구현되어 있으며,
 cts_로 시작하지 않는 attribute로 연속조회가 구현된 경우, 별도로 로직을 구현하셔야 합니다. (Base.py 파일 참조)
-
-## EasyAPI 디렉토리
-EasyAPI 디렉토리 API를 빠르고 쉽게 꺼내쓸 수 있도록 개인적으로 작성해둔 공간입니다.
-API를 custum으로 사용하고 싶으신 경우, EasyAPI에 작성하셔서 쓰시면 됩니다.
 
 
 ## example code
