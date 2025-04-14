@@ -3,7 +3,7 @@ import asyncio
 from .Const import BASE_URL_WEBSOCKET
 
 
-class TimeLimit:
+class _TimeLimit:
     TRLimitPerSecond = 0
     TRCnt = 0
     PrevTime = time.time()
@@ -17,6 +17,7 @@ class TimeLimit:
     @classmethod
     def incr_cnt(cls):
         """ (동기) 그 간의 요청횟수에 1을 더함 """
+        print('incr_cnt')
         cls.TRCnt += 1
 
     @classmethod
@@ -33,10 +34,8 @@ class TimeLimit:
             return 
         now = time.time()
         if now - cls.PrevTime >= 1.0:
-            #print("testprint :: if now - cls.PrevTime >= 1:")
             cls.reset_limit()
         elif cls.TRCnt >= cls.TRLimitPerSecond:
-            #print("testprint :: elif cls.TRCnt >= cls.TRLimitPerSecond: await asyncio.sleep()")
             time.sleep(cls.PrevTime + 1.0 - now + 0.001)
             cls.reset_limit()
         return
@@ -50,16 +49,14 @@ class TimeLimit:
         async with lock:
             now = time.time()
             if now - cls.PrevTime >= 1.0:
-                #print("testprint :: if now - cls.PrevTime >= 1:")
                 cls.reset_limit()
             elif cls.TRCnt >= cls.TRLimitPerSecond:
-                #print("testprint :: elif cls.TRCnt >= cls.TRLimitPerSecond: asyncio.sleep()")
                 await asyncio.sleep(cls.PrevTime + 1.0 - now + 0.001)
                 cls.reset_limit()
         return
 
 
-class BaseTR(TimeLimit):
+class BaseTR(_TimeLimit):
     """TR을 요청(request-post) 하기 위한 Base Class """
     TRCode = ""
     Url = ""
@@ -82,7 +79,7 @@ class BaseTR(TimeLimit):
         }
 
 
-class BaseWS(TimeLimit):
+class BaseWS(_TimeLimit):
     """웹 소켓 연결을 위한 Base Class """
     TRCode = ""
     Name   = ""
