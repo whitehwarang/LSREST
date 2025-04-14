@@ -11,7 +11,9 @@ def _post(tr_inst:BaseTR, test_print=False) -> dict:
     if test_print:
         print(tr_inst.header)
         print(tr_inst.body)
-    rp = requests.post(url=BASE_URL_POST+tr_inst.Url, 
+    tr_inst.keep_limit()
+    tr_inst.incr_cnt()
+    rp = requests.post(url=BASE_URL_POST + tr_inst.Url, 
                        headers=getattr(tr_inst, 'header', None), 
                        params=getattr(tr_inst, 'params', None), 
                        data=json.dumps(getattr(tr_inst, 'body', None)),
@@ -26,11 +28,8 @@ def _post(tr_inst:BaseTR, test_print=False) -> dict:
 
 def rq_tr(tr_inst:BaseTR) -> dict:
     """ 동기식으로 tr을 request한다. """
-    tr_inst.keep_limit()
-    tr_inst.incr_cnt()
     rp : dict = _post(tr_inst)
     body : dict = rp['body']
-
     # 연속 조회 루틴
     while rp['header'].get('tr_cont') == 'Y':
 
@@ -40,24 +39,20 @@ def rq_tr(tr_inst:BaseTR) -> dict:
 
         # block name setting
         _inblock_nm : str = f"{tr_inst.TRCode}InBlock"
-        _outblock_nms : tuple = tuple(key for key in body.keys() if "OutBlock" in key)
+        _outblock_nms : tuple = tuple(key for key in rp['body'].keys() if "OutBlock" in key)
         if not _outblock_nms: break  # OutBlock 없으면 연속조회 루틴 탈출
         _main_outblock_nm : str = min(_outblock_nms)
-
         # body setting
-        _cts_dict : dict = {k: v for k, v in body.get(_main_outblock_nm).items() if k.startswith('cts_')}
+        _cts_dict : dict = {k: v for k, v in rp['body'].get(_main_outblock_nm).items() if k.startswith('cts_')}
         tr_inst.body[_inblock_nm].update(_cts_dict)
 
         # re-request(post)
-        tr_inst.keep_limit()
-        tr_inst.incr_cnt()
         rp : dict = _post(tr_inst)
-        
         # append re-requested list-type data to previously requested one.
         for sub_outblock_nm in _outblock_nms:
             if isinstance(rp['body'][sub_outblock_nm], list):
                 body[sub_outblock_nm] = rp['body'][sub_outblock_nm] + body[sub_outblock_nm]
-
+        
     return body
 
 
