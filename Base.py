@@ -7,6 +7,7 @@ class _TimeLimit:
     TRLimitPerSecond = 0
     TRCnt = 0
     PrevTime = time.time()
+    _lock = asyncio.Lock()
 
     @classmethod
     def reset_limit(cls):
@@ -23,8 +24,7 @@ class _TimeLimit:
     @classmethod
     async def async_incr_cnt(cls):
         """ (비동기) 그 간의 요청횟수에 1을 더함 """
-        lock = asyncio.Lock()
-        async with lock:
+        async with cls._lock:
             cls.TRCnt += 1
     
     @classmethod
@@ -43,10 +43,9 @@ class _TimeLimit:
     @classmethod
     async def async_keep_limit(cls):
         """ (비동기) 요청제한을 준수하기 위한 체크메서드 """
-        if not cls.TRLimitPerSecond or not cls.TRCnt: 
-            return 
-        lock = asyncio.Lock()
-        async with lock:
+        if not cls.TRLimitPerSecond or not cls.TRCnt:
+            return
+        async with cls._lock:
             now = time.time()
             if now - cls.PrevTime >= 1.0:
                 cls.reset_limit()
