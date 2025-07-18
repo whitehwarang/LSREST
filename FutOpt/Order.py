@@ -60,6 +60,40 @@ class CFOBQ10800(_OrderTR):
         super().__init__(token)
         self.body = {'CFOBQ10800InBlock1': {'SpclDtPtnCode': SpclDtPtnCode, 'SettWklyCnt': SettWklyCnt, 'DueYymm': DueYymm, 'IsuSmclssCode': IsuSmclssCode, 'IsuMdclssCode': IsuMdclssCode}}
 
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENT00100(_OrderTR):
+    TRCode = "CCENT00100"
+    Name   = "KRX야간파생 위탁 신규 주문"
+    TRLimitPerSecond = 5
+    TRCnt  = 0
+    def __init__(self, token, FnoIsuNo, BnsTpCode, FnoOrdprcPtnCode, FnoOrdPrc, OrdQty):
+        super().__init__(token)
+        self.body = {'CCENT00100InBlock1':{'FnoIsuNo': FnoIsuNo, 'BnsTpCode': BnsTpCode, 'FnoOrdprcPtnCode': FnoOrdprcPtnCode, 'FnoOrdPrc': FnoOrdPrc, 'OrdQty': OrdQty}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENT00200(_OrderTR):
+    TRCode  = "CCENT00200"
+    Name    = "KRX야간파생 위탁 정정 주문"
+    TRLimitPerSecond = 5
+    TRCnt   = 0
+    def __init__(self, token, FnoIsuNo, OrgOrdNo, FnoOrdprcPtnCode, FnoOrdPrc, MdfyQty):
+        super().__init__(token)
+        self.body = {'CCENT00200InBlock1': {'FnoIsuNo': FnoIsuNo, 'OrgOrdNo': OrgOrdNo, 'FnoOrdprcPtnCode': FnoOrdprcPtnCode, 'FnoOrdPrc': FnoOrdPrc, 'MdfyQty': MdfyQty}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENT00300(_OrderTR):
+    TRCode  = "CCENT00300"
+    Name    = "KRX야간파생 위탁 취소 주문"
+    TRLimitPerSecond = 5
+    TRCnt = 0
+    def __init__(self, token, FnoIsuNo, OrgOrdNo, CancQty):
+        super().__init__(token)
+        self.body = {'CCENT00300InBlock1': {'FnoIsuNo': FnoIsuNo, 'OrgOrdNo': OrgOrdNo, 'CancQty': CancQty}}
+
+
 """
 25.06.07. KRX 야간파생 도입에 따라 아래 TR이 삭제됨
 
