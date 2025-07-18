@@ -15,7 +15,10 @@ class CD0(BaseWSSise):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    
+
+"""
+25.06.07. KRX 야간파생 도입에 따라 일부 TR이 삭제됨
+
 class EC0(BaseWSSise):
     TRCode = "EC0"
     Name   = "EUREX연계KP200지수옵션선물체결"
@@ -49,6 +52,7 @@ class EU2(BaseWSAcc):
     Name   = "EUX확인"
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+"""
 
     
 class FC0(BaseWSSise):
