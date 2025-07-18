@@ -1,5 +1,6 @@
 from . import FutOpt
 from . import FrgFut
+from . import FrgStock
 from . import OAuth
 from . import RealtimeInvestInfo
 from . import Stock
