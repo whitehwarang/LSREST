@@ -71,7 +71,7 @@ class CFOFQ02400(_AccountTR):
 class t0434(_AccountTR):
     TRCode = "t0434"
     Name   = "선물/옵션체결/미체결"
-    TRLimitPerSecond = 2
+    TRLimitPerSecond = 1
     TRCnt  = 0
     def __init__(self, token, expcode, chegb, sortgb, cts_ordno):
         super().__init__(token)
@@ -81,11 +81,81 @@ class t0434(_AccountTR):
 class t0441(_AccountTR):
     TRCode = "t0441"
     Name   = "선물/옵션잔고평가(이동평균)"
-    TRLimitPerSecond = 2
+    TRLimitPerSecond = 1
     TRCnt  = 0
     def __init__(self, token, cts_expcode, cts_medocd):
         super().__init__(token)
         self.body = {'t0441InBlock': {'cts_expcode': cts_expcode, 'cts_medocd': cts_medocd}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENQ10100(_AcountTR):
+    TRCode = 'CCENQ10100'
+    Name   = "KRX야간파생 주문가능수량 조회"
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token, RecCnt, QryTp, OrdAmt, RatVal, FnoIsuNo, BnsTpCode, FnoOrdPrc, FnoOrdprcPtnCode):
+        super().__init__(token)
+        self.body = {'CCENQ10100InBlock1': {
+            'RecCnt' : RecCnt, 
+            'QryTp'  : QryTp, 
+            'OrdAmt' : OrdAmt, 
+            'RatVal' : RatVal, 
+            'FnoIsuNo' : FnoIsuNo, 
+            'BnsTpCode': BnsTpCode, 
+            'FnoOrdPrc': FnoOrdPrc, 
+            'FnoOrdprcPtnCode' : FnoOrdprcPtnCode,
+        }}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENQ30100(_AccountTR):
+    TRCode  = 'CCENQ30100'
+    Name    = 'KRX야간파생 주문/체결내역 조회'
+    TRLimitPerSecond = 1
+    TRCnt   = 0
+    def __init__(self, token, 
+                 RecCnt, QrySrtDt, QryEndDt, FnoClssCode, PrdgrpCode, 
+                 PrdtExecTpCode, StnlnSeqTp, MktTpCode, CommdaCode, FnoIsuNo, 
+                 FnoTrdPtnCode, GrpId, UserId, SrtOrdNo2
+                ):
+        super().__init__(token)
+        self.body = {
+            "CCENQ30100InBlock1": {
+                'RecCnt': RecCnt, 
+                'QrySrtDt': QrySrtDt, 
+                'QryEndDt': QryEndDt, 
+                'FnoClssCode': FnoClssCode, 
+                'PrdgrpCode': PrdgrpCode, 
+                'PrdtExecTpCode': PrdtExecTpCode, 
+                'StnlnSeqTp': StnlnSeqTp, 
+                'MktTpCode': MktTpCode, 
+                'CommdaCode': CommdaCode, 
+                'FnoIsuNo': FnoIsuNo, 
+                'FnoTrdPtnCode': FnoTrdPtnCode, 
+                'GrpId': GrpId, 
+                'UserId': UserId, 
+                'SrtOrdNo2': SrtOrdNo2, 
+            }
+        }
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
+class CCENQ90200(_AccountTR):
+    TRCode = 'CCENQ90200'
+    TRName = 'KRX야간파생 잔고조회'
+    TRLimitPerSecond = 1
+    TRCnt = 0
+    def __init__(self, token, RecCnt, BalEvalTp, FutsPrcEvalTp):
+        super().__init__(token)
+        self.body = {
+            'CCENQ90200InBlock1': {
+                'RecCnt': RecCnt, 
+                'BalEvalTp': BalEvalTp, 
+                'FutsPrcEvalTp': FutsPrcEvalTp,
+            }
+        }
+
 
 """
 25.06.07. KRX 야간파생 도입에 따라 아래 TR이 삭제됨
