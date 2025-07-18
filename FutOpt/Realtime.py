@@ -197,7 +197,7 @@ class DC0(BaseWSSise):
 
 
 #25.06.07. KRX 야간파생 도입에 따라 추가
-class O02(BaseWSSise):
+class O02(BaseWSAcc):
     TRCode = "O02"
     Name   = "KRX야간파생 선물접수"
     def __init__(self, *args, **kwargs):
@@ -205,7 +205,7 @@ class O02(BaseWSSise):
 
 
 #25.06.07. KRX 야간파생 도입에 따라 추가
-class C02(BaseWSSise):
+class C02(BaseWSAcc):
     TRCode = "C02"
     Name   = "KRX야간파생 선물체결"
     def __init__(self, *args, **kwargs):
@@ -221,7 +221,7 @@ class DH0(BaseWSSise):
 
 
 #25.06.07. KRX 야간파생 도입에 따라 추가
-class H02(BaseWSSise):
+class H02(BaseWSAcc):
     TRCode = "H02"
     Name   = "KRX야간파생 선물정정취소"
     def __init__(self, *args, **kwargs):
