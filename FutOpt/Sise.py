@@ -305,3 +305,85 @@ class t9944(_SiseTR):
         self.body = {'t9944InBlock': {'dummy': dummy}}
 
     
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8455(_SiseTR):
+    TRCode = 't8455'
+    Name   = 'KRX야간파생 마스터조회(API용)'
+    TRLimitPerSecond = 2
+    TRCnt  = 0
+    def __init__(self, token, gubun):
+        super().__init__(token)
+        self.body = {'t8455InBlock': {'gubun': gubun}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8456(_SiseTR):
+    TRCode = 't8456'
+    Name   = 'KRX야간파생 시세조회(API용)'
+    TRLimitPerSecond = 2
+    TRCnt  = 0
+    def __init__(self, token, focode):
+        super().__init__(token)
+        self.body = {'t8456InBlock': {'focode': focode}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8457(_SiseTR):
+    TRCode = 't8457'
+    Name   = 'KRX야간파생 호가조회(API용)'
+    TRLimitPerSecond = 2
+    TRCnt  = 0
+    def __init__(self, token, shcode):
+        super().__init__(token)
+        self.body = {'t8457InBlock': {'shcode': shcode}}
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8458(_SiseTR):
+    TRCode = 't8458'
+    Name   = 'KRX야간파생 시간대별체결(API용)'
+    TRLimitPerSecond = 2
+    TRCnt  = 0
+    def __init__(self, token, focode, cvolume, stime, etime, cts_time):
+        super().__init__(token)
+        self.body = {
+            't8458InBlock': {
+                'focode': focode, 
+                'cvolume': cvolume, 
+                'stime': stime, 
+                'etime': etime, 
+                'cts_time': cts_time, 
+            }
+        }
+
+
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8459(_SiseTR):
+    TRCode = 't8459'
+    Name   = 'KRX야간파생 기간별주가(API용)'
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token, shcode, futcheck, date, cts_code, lastdate, cnt):
+        super().__init__(token)
+        self.body = {
+            't8459InBlock': {
+                'shcode': shcode,
+                'futcheck': futcheck, 
+                'date': date, 
+                'cts_code': cts_code, 
+                'lastdate': lastdate, 
+                'cnt': cnt,
+            }
+        }
+        
+# 25.06.07. KRX 야간파생 도입에 따라 아래와 같이 TR 추가
+class t8460(_SiseTR):
+    TRCode = 't8460'
+    Name   = 'KRX야간파생 옵션 전광판'
+    TRLimitPerSecond = 2
+    TRCnt  = 0
+    def __init__(self, token, yyyymm, gubun):
+        super().__init__(token)
+        self.body = {'t8460InBlock': {'yyyymm': yyyymm, 'gubun': gubun}}
+
+
