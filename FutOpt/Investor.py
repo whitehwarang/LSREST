@@ -27,4 +27,43 @@ class t2545(_InvestorTR):
         super().__init__(token)
         self.body = {'t2545InBlock': {'eitem': eitem, 'sgubun': sgubun, 'upcode': upcode, 'nmin': nmin, 'cnt': cnt, 'bgubun': bgubun}}
 
-    
+
+# 25.06.07.  KRX 야간파생 도입에 따라 아래와 같이 사용 TR 추가
+class t8462(_InvestorTR):
+    TRCode = "t8462"
+    Name   = "KRX야간파생 투자자기간별(API용)"
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token, tm_rng, fot_clsf_cd, bsc_asts_id, gubun2, gubun3, from_date, to_date):
+        super().__init__(token)
+        self.body = {
+            't8462InBlock': {
+                'tm_rng': tm_rng, 
+                'fot_clsf_cd': fot_clsf_cd, 
+                'bsc_asts_id': bsc_asts_id, 
+                'gubun2': gubun2, 
+                'gubun3': gubun3, 
+                'from_date': from_date, 
+                'to_date': to_date, 
+            }
+        }
+
+
+# 25.06.07.  KRX 야간파생 도입에 따라 아래와 같이 사용 TR 추가
+class t8463(_InvestorTR):
+    TRCode = "t8463"
+    Name   = "KRX야간파생 투자자시간대별(API용)"
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token, tm_rng, fot_clsf_cd, bsc_asts_id, cnt, bgubun):
+        super().__init__(token)
+        self.body = {
+            't8463InBlock': {
+                'tm_rng': tm_rng, 
+                'fot_clsf_cd': fot_clsf_cd, 
+                'bsc_asts_id': bsc_asts_id, 
+                'cnt': cnt, 
+                'bgubun': bgubun, 
+            }
+        }
+
