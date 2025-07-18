@@ -97,7 +97,9 @@ class t2421(_SiseTR):
         super().__init__(token)
         self.body = {'t2421InBlock': {'focode': focode, 'bdgubun': bdgubun, 'nmin': nmin, 'tcgubun': tcgubun, 'cnt': cnt}}
 
-    
+"""
+25.06.07. KRX 야간파생 도입에 따라 일부 TR이 삭제됨
+
 class t2830(_SiseTR):
     TRCode = "t2830"
     Name   = "EUREXKOSPI200옵션선물현재가(시세)조회"
@@ -146,6 +148,7 @@ class t2835(_SiseTR):
     def __init__(self, token, yyyymm, gubun, gmprice, gmsign, gmchange, gmdiff, gmvolume, gmshcode):
         super().__init__(token)
         self.body = {'t2835InBlock': {'yyyymm': yyyymm, 'gubun': gubun, 'gmprice': gmprice, 'gmsign': gmsign, 'gmchange': gmchange, 'gmdiff': gmdiff, 'gmvolume': gmvolume, 'gmshcode': gmshcode}}
+"""
 
     
 class t8401(_SiseTR):
