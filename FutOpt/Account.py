@@ -87,7 +87,9 @@ class t0441(_AccountTR):
         super().__init__(token)
         self.body = {'t0441InBlock': {'cts_expcode': cts_expcode, 'cts_medocd': cts_medocd}}
 
-    
+"""
+25.06.07. KRX 야간파생 도입에 따라 아래 TR이 삭제됨
+
 class CEXAQ21100(_AccountTR):
     TRCode = "CEXAQ21100"
     Name   = "EUREX 주문체결내역조회"
@@ -136,8 +138,9 @@ class CEXAQ44200(_AccountTR):
     def __init__(self, token, QrySrtDt, QryEndDt, PrdtExecTpCode, FnoTrdPtnCode, SrtOrdNo2, StnlnSeqTp):
         super().__init__(token)
         self.body = {'CEXAQ44200InBlock1': {'QrySrtDt': QrySrtDt, 'QryEndDt': QryEndDt, 'PrdtExecTpCode': PrdtExecTpCode, 'FnoTrdPtnCode': FnoTrdPtnCode, 'SrtOrdNo2': SrtOrdNo2, 'StnlnSeqTp': StnlnSeqTp}}
+"""
 
-    
+
 class FOCCQ33700(_AccountTR):
     TRCode = "FOCCQ33700"
     Name   = "선물옵션 기간별 계좌 수익률 현황"
