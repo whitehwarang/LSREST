@@ -1,4 +1,5 @@
 __pycache__
+__DIR_*
 trashcan
 _mykey.json
 _recent_access_token.json
