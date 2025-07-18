@@ -3,7 +3,7 @@
 - (25.04.09) 주석(comment) 수정 및 dependancy 명시
 - (25.04.14) Sync.py & Async.py에서 연속조회 시 오류 해결 / 경로 충돌 문제 해결 / Util.py 파일 추가(Access Token Manager 추가) / README.md의 예제코드 수정
 - (25.04.15) README.md 예제 변경
-- (25.07.18) 비동기(Async) 처리 로직에서 non-shared lock을 shared lock으로 변경
+- (25.07.18) 비동기(Async) 처리 로직에서 non-shared lock을 shared lock으로 변경 / t1852(파일저장조건 실시간검색) TR추가
 
 # LSREST
 LS(구.eBest) 투자증권의 RESTful OpenAPI(https://openapi.ls-sec.co.kr/intro)를 쉽게 이용할수 있게끔 하는 python-package 입니다.
