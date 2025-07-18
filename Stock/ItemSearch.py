@@ -38,6 +38,16 @@ class t1826(_ItemSearchTR):
         self.body = {'t1826InBlock': {'search_gb': search_gb}}
 
 
+class t1852(_ItemSearchTR):
+    TRCode = 't1852'
+    Name   = "파일저장종목 실시간검색"
+    TRLimitPerSecond = 1
+    TRCnt  = 0
+    def __init__(self, token, flag, sservergb, sFileData):
+        super().__init__(token)
+        self.body = {'t1852InBlock':{'flag': flag, 'sservergb': sservergb, 'sFileData': sFileData}}
+
+
 class t1856(_ItemSearchTR):
     TRCode = 't1856'
     Name   = '파일저장종목검색'
