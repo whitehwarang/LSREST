@@ -187,4 +187,83 @@ class YOC(BaseWSSise):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DC0(BaseWSSise):
+    TRCode = "DC0"
+    Name   = "KRX야간파생 체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class O02(BaseWSSise):
+    TRCode = "O02"
+    Name   = "KRX야간파생 선물접수"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class C02(BaseWSSise):
+    TRCode = "C02"
+    Name   = "KRX야간파생 선물체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DH0(BaseWSSise):
+    TRCode = "DH0"
+    Name   = "KRX야간파생 호가"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class H02(BaseWSSise):
+    TRCode = "H02"
+    Name   = "KRX야간파생 선물정정취소"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DD0(BaseWSSise):
+    TRCode = "DD0"
+    Name   = "KRX야간파생 실시간상하한가"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DX0(BaseWSSise):
+    TRCode = "DX0"
+    Name   = "KRX야간파생 가격제한폭확대"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DYC(BaseWSSise):
+    TRCode = "DYC"
+    Name   = "KRX야간파생 예상체결"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DBM(BaseWSSise):
+    TRCode = "DBM"
+    Name   = "KRX야간파생 투자자매매현황"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+#25.06.07. KRX 야간파생 도입에 따라 추가
+class DBT(BaseWSSise):
+    TRCode = "DBT"
+    Name   = "KRX야간파생 투자자별현황"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
