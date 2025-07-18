@@ -60,7 +60,9 @@ class CFOBQ10800(_OrderTR):
         super().__init__(token)
         self.body = {'CFOBQ10800InBlock1': {'SpclDtPtnCode': SpclDtPtnCode, 'SettWklyCnt': SettWklyCnt, 'DueYymm': DueYymm, 'IsuSmclssCode': IsuSmclssCode, 'IsuMdclssCode': IsuMdclssCode}}
 
-    
+"""
+25.06.07. KRX 야간파생 도입에 따라 아래 TR이 삭제됨
+
 class CEXAT11100(_OrderTR):
     TRCode = "CEXAT11100"
     Name   = "EUREX 매수/매도주문"
@@ -89,5 +91,5 @@ class CEXAT11300(_OrderTR):
     def __init__(self, token, OrgOrdNo, FnoIsuNo):
         super().__init__(token)
         self.body = {'CEXAT11300InBlock1': {'OrgOrdNo': OrgOrdNo, 'FnoIsuNo': FnoIsuNo}}
-
+"""
     
