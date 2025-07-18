@@ -47,7 +47,9 @@ class t8416(_ChartTR):
         super().__init__(token)
         self.body = {'t8416InBlock': {'shcode': shcode, 'gubun': gubun, 'qrycnt': qrycnt, 'sdate': sdate, 'edate': edate, 'cts_date': cts_date, 'comp_yn': comp_yn}}
 
-    
+"""
+25.06.07. KRX 야간파생 도입에 따라 일부 TR이 삭제됨
+
 class t8429(_ChartTR):
     TRCode = "t8429"
     Name   = "EUREX야간옵션선물틱분별체결조회챠트"
@@ -56,5 +58,5 @@ class t8429(_ChartTR):
     def __init__(self, token, focode, cgubun, bgubun, cnt):
         super().__init__(token)
         self.body = {'t8429InBlock': {'focode': focode, 'cgubun': cgubun, 'bgubun': bgubun, 'cnt': cnt}}
+"""
 
-    
