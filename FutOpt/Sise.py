@@ -270,7 +270,10 @@ class t8435(_SiseTR):
         super().__init__(token)
         self.body = {'t8435InBlock': {'gubun': gubun}}
 
-    
+
+"""
+25.06.07. KRX 야간파생 도입에 따라 일부 TR이 삭제됨
+
 class t8437(_SiseTR):
     TRCode = "t8437"
     Name   = "CME/EUREX마스터조회(API용)"
@@ -279,6 +282,7 @@ class t8437(_SiseTR):
     def __init__(self, token, gubun):
         super().__init__(token)
         self.body = {'t8437InBlock': {'gubun': gubun}}
+"""
 
     
 class t9943(_SiseTR):
