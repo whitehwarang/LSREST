@@ -89,7 +89,7 @@ class t0441(_AccountTR):
 
 
 # 25.06.07. KRX 야간파생 도입에 따라 아래 TR 추가
-class CCENQ10100(_AcountTR):
+class CCENQ10100(_AccountTR):
     TRCode = 'CCENQ10100'
     Name   = "KRX야간파생 주문가능수량 조회"
     TRLimitPerSecond = 1
